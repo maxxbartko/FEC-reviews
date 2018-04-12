@@ -1,3 +1,7 @@
+CREATE ETSYCUTIONER;
+
+USE ETSYCUTIONER;
+
 CREATE TABLE reviews (
   id INT NOT NULL,
   person INT NOT NULL,
@@ -40,4 +44,4 @@ CREATE TABLE listings (
   PRIMARY KEY (id),
   FOREIGN KEY (shop)
     REFERENCES shops(id),
-)
+);
