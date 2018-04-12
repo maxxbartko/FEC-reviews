@@ -1,6 +1,6 @@
-CREATE ETSYCUTIONER;
+CREATE DATABASE etsycutioner;
 
-USE ETSYCUTIONER;
+USE etsycutioner;
 
 CREATE TABLE reviews (
   id INT NOT NULL,
