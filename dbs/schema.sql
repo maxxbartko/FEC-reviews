@@ -3,14 +3,14 @@ CREATE DATABASE IF NOT EXISTS etsycutioner;
 USE etsycutioner;
 
 CREATE TABLE people (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
   photo TEXT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE shops (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
   review_count MEDIUMINT,
   avg_stars TINYINT,
@@ -18,7 +18,7 @@ CREATE TABLE shops (
 );
 
 CREATE TABLE listings (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
   photo TEXT,
   shop INT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE listings (
 );
 
 CREATE TABLE reviews (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   person INT NOT NULL,
   shop INT NOT NULL,
   listing INT NOT NULL,
