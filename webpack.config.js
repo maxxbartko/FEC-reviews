@@ -19,7 +19,7 @@ module.exports = {
   },
   output: {
     path: `${__dirname}/public`,
-    publicPath: '/',
+    publicPath: '/', // set to listing/id/reviews?
     filename: 'bundle.js',
   },
   plugins: [

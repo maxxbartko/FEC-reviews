@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-React.DOM.render(
+ReactDOM.render(
   <span role="img" aria-label="Skull and Crossbones">
   ☠️　ＥＴＳＹＣＵＴＩＯＮＥＲ　☠️
   </span>,
