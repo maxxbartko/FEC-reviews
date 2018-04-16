@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
 
 ReactDOM.render(
-  <span role="img" aria-label="Skull and Crossbones">
-  ☠️　ＥＴＳＹＣＵＴＩＯＮＥＲ　☠️
-  </span>,
+  <App />,
   document.getElementById('app'),
 );
 

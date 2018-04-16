@@ -12,8 +12,8 @@ CREATE TABLE people (
 CREATE TABLE shops (
   id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
-  review_count MEDIUMINT,
-  avg_stars TINYINT,
+  reviews_count INT,
+  avg_stars_per_cent TINYINT,
   PRIMARY KEY (id)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE reviews (
   shop INT NOT NULL,
   listing INT NOT NULL,
   body TEXT NOT NULL,
-  date DATE NOT NULL,
+  date DATETIME NOT NULL,
   stars TINYINT NOT NULL,
 
   PRIMARY KEY (id),

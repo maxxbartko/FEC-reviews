@@ -3,7 +3,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    './client/index.jsx',
+    `${__dirname}/client/index.jsx`,
   ],
   module: {
     rules: [
@@ -19,7 +19,6 @@ module.exports = {
   },
   output: {
     path: `${__dirname}/public`,
-    publicPath: '/', // set to listing/id/reviews?
     filename: 'bundle.js',
   },
   plugins: [
