@@ -3,6 +3,8 @@ const moment = require('moment');
 
 const listings = [];
 const people = [];
+const shopDataPerListing = {};
+// when you plug in listing, it gives you shop.
 const reviews = [];
 const shops = [];
 const reviewDataPerShop = {};
@@ -37,11 +39,13 @@ const makeReviews = () => {
   const nReviews = Math.floor(listings.length * 4);
 
   for (let i = 1; i <= nReviews; i++) {
+    const listing = 666666666 + Math.floor(Math.random() * (nReviews / 4));
+
     const review = [
       i,
       1 + Math.floor(Math.random() * (nReviews / 4)),
-      1 + Math.floor(Math.random() * (nReviews / 16)),
-      666666666 + Math.floor(Math.random() * (nReviews / 4)),
+      shopDataPerListing[listing],
+      listing,
       faker.fake('{{lorem.paragraphs}}'),
       renderISODate(faker.fake('{{date.past(5)}}')),
       1 + Math.floor(Math.random() * 5),
@@ -51,13 +55,13 @@ const makeReviews = () => {
 };
 
 const makeReviewDataPerShop = () => {
-  const nStores = Math.floor(listings.length / 4);
+  const nShops = Math.floor(listings.length / 4);
 
-  for (let i = 1; i <= nStores; i++) {
+  for (let i = 1; i <= nShops; i++) {
     reviewDataPerShop[i] = [0, 0];
   }
 
-  for (let i = 1; i < (nStores * 16); i++) {
+  for (let i = 1; i < (nShops * 16); i++) {
     const shop = reviews[i][2];
     const stars = reviews[i][6];
     reviewDataPerShop[shop][0]++;
@@ -66,8 +70,8 @@ const makeReviewDataPerShop = () => {
 };
 
 const makeShops = () => {
-  const nStores = Math.floor(listings.length / 4);
-  for (let i = 1; i <= nStores; i++) {
+  const nShops = Math.floor(listings.length / 4);
+  for (let i = 1; i <= nShops; i++) {
     const reviewCount = reviewDataPerShop[i][0];
     const totalStars = reviewDataPerShop[i][1];
     const shop = [
@@ -81,6 +85,13 @@ const makeShops = () => {
 };
 
 makeListingsPeople();
+
+for (let i = 0; i < listings.length; i++) {
+  const id = listings[i][0];
+  const shop = listings[i][3];
+  shopDataPerListing[id] = shop;
+}
+
 makeReviews();
 makeReviewDataPerShop();
 makeShops();

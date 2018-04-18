@@ -3,11 +3,12 @@ const mysql = require('promise-mysql');
 
 const app = express();
 let connection;
-let shopId;
+// let shopId;
 app.use(express.static('public'));
 
-app.get('/:listingId/reviews/', (req, res) => {
-  console.log('G E T');
+app.get('/listings/:listingId/reviews/', (req, res) => {
+  console.log('G E T request');
+
   mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
@@ -17,56 +18,45 @@ app.get('/:listingId/reviews/', (req, res) => {
     connection = conn;
     return connection.query(`SELECT shop FROM listings WHERE listings.id = ${req.params.listingId}`);
   }).then((packet) => {
-    shopId = packet[0].shop;
-    return connection.query(`SELECT * FROM reviews, listings WHERE listings.shop = ${shopId} AND listings.shop = reviews.shop`);
+    const { shop } = packet[0];
+    return connection.query(`SELECT DISTINCT reviews.id, reviews.person, reviews.shop, reviews.listing, reviews.body, reviews.date, reviews.stars FROM reviews, listings WHERE listings.shop = ${shop} AND listings.shop = reviews.shop`);
   }).then(data => res.send(data))
     .catch(err => console.log`⚠️ Error responding to GET request: ${err}`);
 });
 
+// app.post('listings/:listingId/reviews/', (req, res) => {
+//   console.log('P O S T request');
+
+//   const {
+//     person, shop, listing, body, stars,
+//   } = req.body;
+//   const date = (new Date()).toISOString();
+//   const review = [
+//     person, shop, listing, body, date.split('T').join(' ').slice(0, 19), stars,
+//   ];
+
+//   let reviewsData;
+
+//   mysql.createConnection({
+//     host: '127.0.0.1',
+//     user: 'root',
+//     password: '',
+//     database: 'etsycutioner',
+//   }).then((conn) => {
+//     connection = conn;
+//     return connection.query('INSERT INTO reviews VALUES (person, shop, listing, body, date, stars) ?', [review]);
+//   }).then(() => connection.query(`SELECT reviews_count, avg_stars_per_cent FROM shops WHERE shops.id = ${shop}`))
+//     .then((packet) => {
+//       console.log(packet);
+//       const { reviewsCount, avgStarsPerCent } = packet[0];
+//     })
+//     .then(data => res.send(data))
+//     .catch(err => console.log`⚠️ Error responding to GET request: ${err}`);
+// });
+
 app.listen(6300, () => console.log`👌`);
 
-//   console.log('G E T');
-//   mysql.createConnection({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     password: '',
-//     database: 'etsycutioner',
-//   }).then(conn => conn.query(`SELECT * FROM reviews`))
-//   .then(data => console.log(data))
-//   .then(res.end())
-//   .catch(err => console.log`⚠️ Error responding to GET request: ${err}`);
-// res.send('hello world');
-// }
-
-// POST route
-
-// tried
-// serving index ✅
-// serving 'hello world' from '/reviews/' ❎
-// console logging to webpack-dev-server ❎
-// console logging to nodemon ❎
-// devtools on webpack-dev-server ❎
-// devtools on nodemon ❎
-
-// original implementation
-// const express = require('express');
-// const mysql = require('promise-mysql');
-
-// const app = express();
-// app.use(express.static('public'));
-
-// // GET route
-// app.get('/:listingId/reviews/', (req, res) => {
-//   console.log('G E T');
-//   mysql.createConnection({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     password: '',
-//     database: 'etsycutioner',
-//   }).then(conn => conn.query(`SELECT * FROM reviews`))
-//     .then(data => console.log(data))
-//     .then(res.end())
-//     .catch(err => console.log`⚠️ Error responding to GET request: ${err}`);
-// }
-
-// // POST route
+// post request
+// first: insert into db
+// then: retrieve shop reviews length and average
+// then: overwrite shop reviews length and average
