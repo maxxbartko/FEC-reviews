@@ -2,6 +2,7 @@ const mysql = require('promise-mysql');
 const {
   listings, people, reviews, shops,
 } = require('./seedData');
+
 let connection;
 
 mysql.createConnection({
