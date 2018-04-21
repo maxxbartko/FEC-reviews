@@ -16,6 +16,7 @@
     "webpack": "webpack-dev-server --mode development"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "eslint": "^4.19.1",
     "express": "^4.16.3",
     "faker": "^4.1.0",
