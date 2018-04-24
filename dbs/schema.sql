@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS shops (
   id INT NOT NULL AUTO_INCREMENT,
   name TEXT NOT NULL,
   reviews_count INT,
-  avg_stars_per_cent TINYINT,
+  avg_stars_out_of_100 TINYINT,
   PRIMARY KEY (id)
 );
 
