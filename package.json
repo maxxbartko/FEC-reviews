@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start": "nodemon server/index.js --inspect",
+    "test": "jest",
     "webpack": "webpack-dev-server --mode development"
   },
   "dependencies": {

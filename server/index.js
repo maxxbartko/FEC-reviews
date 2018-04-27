@@ -15,7 +15,7 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
     database: 'etsycutioner',
   }).then((conn) => {
     connection = conn;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = (SELECT shop FROM listings WHERE listings.id = ?) AND listings.shop = reviews.shop', req.params.listingId);
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = (SELECT shop FROM listings WHERE listings.id = ?) AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [req.params.listingId, req.params.listingId]);
   }).then(data => res.send(data))
     .catch(err => res.send`⚠️ Error responding to GET request: ${err}`);
 });
