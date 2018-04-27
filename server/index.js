@@ -8,17 +8,36 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/listings/:listingId/reviews/', (req, res) => {
+  const { listingId } = req.params;
+  // might be worth plugging in additional shop query
+  // let shopId;
+
   mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
     password: '',
     database: 'etsycutioner',
+    // in case one query is too complicated for now
+    multipleStatements: true,
   }).then((conn) => {
     connection = conn;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = (SELECT shop FROM listings WHERE listings.id = ?) AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [req.params.listingId, req.params.listingId]);
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = (SELECT shop FROM listings WHERE listings.id = ?) AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [listingId, listingId],
+      // 'SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', listingId;
+      // 'SELECT * FROM listings WHERE shop = (SELECT shop FROM listings WHERE id = ?)', listingId;
+      // 'SELECT * FROM people WHERE id = (SELECT person FROM reviews WHERE shop = (SELECT shop FROM listings WHERE listings.id = ?))', listingId;
+    );
+    // reconfigure above to format:
+    // 'SELECT ? … ; SELECT ? …; SELECT DISTINCT ? …', [var1, var2, var3];
   }).then(data => res.send(data))
     .catch(err => res.send`⚠️ Error responding to GET request: ${err}`);
 });
+
+// much bigger, more complex GET query is needed here
+// for this shop only
+// needs Shop table query for Reviews
+// for every reviews.listing ID
+// needs Listing table query for ReviewItem
+// needs People table query for ReviewItem
 
 app.post('/listings/:listingId/reviews/', (req, res) => {
   const {

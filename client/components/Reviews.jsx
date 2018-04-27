@@ -15,6 +15,7 @@ export default class Reviews extends Component {
     // <ReviewItem /> with this.state.props = { review data }
     return (
       <div>
+        {/* Stretch goal: <ReviewsForm /> component here */}
         {/* Reviews [display shop star rating (number of shop reviews)]
         insert review array here
         */}
@@ -24,3 +25,9 @@ export default class Reviews extends Component {
 }
 
 // prop types validation
+
+// Shops Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// reviews_count INT,
+// avg_stars_out_of_100 TINYINT,

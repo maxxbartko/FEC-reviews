@@ -30,3 +30,23 @@ export default class ReviewItem extends Component {
 }
 
 // prop types validation
+
+// Reviews Table //
+//   id INT NOT NULL AUTO_INCREMENT,
+//   person INT NOT NULL,
+//   shop INT NOT NULL,
+//   listing INT NOT NULL,
+//   body TEXT NOT NULL,
+//   date DATETIME NOT NULL,
+//   stars TINYINT NOT NULL,
+
+// People Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// photo TEXT,
+
+// Listings Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// photo TEXT,
+// shop INT NOT NULL,
