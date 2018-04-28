@@ -10,6 +10,7 @@ export default class ReviewItem extends Component {
   render() {
     return (
       <div>
+        {this.props.review.body}
         {/*
         Left panel:
         circular profile image
@@ -24,12 +25,24 @@ export default class ReviewItem extends Component {
         date (no time)
         that's it
         */}
+        <br /><br /> !!!!!!! <br /><br />
       </div>
     );
   }
 }
 
 // prop types validation
+ReviewItem.propTypes = {
+  review: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    person: PropTypes.number.isRequired,
+    shop: PropTypes.number.isRequired,
+    listing: PropTypes.number.isRequired,
+    body: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    stars: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 // Reviews Table //
 // id INT NOT NULL AUTO_INCREMENT,
