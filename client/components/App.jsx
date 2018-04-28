@@ -13,8 +13,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`${window.location.href}/reviews/`)
-    // investigate relationship between API endpoint / fetch URL
+    fetch(`${window.location.href}listings/666666666/reviews/`)
+    // 404 error is likely about 6299/6300 ports situation between servers
       .then(response => response.json())
       .then((data) => {
         const [reviews, listings, people, [shop]] = data;
@@ -23,12 +23,8 @@ export default class App extends Component {
           listings,
           people,
           shop,
-        });
-      }).catch(err => console.error`⚠️ ${err}`);
-    // trigger GET request call for Review table data for this listing/store
-    // requires Listing table query for ReviewItem
-    // requires People table query for ReviewItem
-    // requires Shop table query for Reviews
+        }).catch(err => console.error`⚠️ ${err}`);
+      });
   }
 
   // stretch goal: post function
@@ -47,3 +43,29 @@ export default class App extends Component {
 }
 
 // prop types validation
+
+// Reviews Table //
+//   id INT NOT NULL AUTO_INCREMENT,
+//   person INT NOT NULL,
+//   shop INT NOT NULL,
+//   listing INT NOT NULL,
+//   body TEXT NOT NULL,
+//   date DATETIME NOT NULL,
+//   stars TINYINT NOT NULL,
+
+// Listings Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// photo TEXT,
+// shop INT NOT NULL,
+
+// People Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// photo TEXT,
+
+// Shops Table //
+// id INT NOT NULL AUTO_INCREMENT,
+// name TEXT NOT NULL,
+// reviews_count INT,
+// avg_stars_out_of_100 TINYINT,
