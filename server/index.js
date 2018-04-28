@@ -25,8 +25,7 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
   }).then(([data]) => {
     // pick shop id out of data packet
     const { shop } = data;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [shop, listingId]);
-    // 'SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', listingId;
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', [shop, listingId, listingId]);
     // 'SELECT * FROM listings WHERE shop = (SELECT shop FROM listings WHERE id = ?)', listingId;
     // 'SELECT * FROM people WHERE id = (SELECT person FROM reviews WHERE shop = (SELECT shop FROM listings WHERE listings.id = ?))', listingId;
     // );
