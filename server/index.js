@@ -21,11 +21,15 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
     multipleStatements: true,
   }).then((conn) => {
     connection = conn;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = (SELECT shop FROM listings WHERE listings.id = ?) AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [listingId, listingId],
-      // 'SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', listingId;
-      // 'SELECT * FROM listings WHERE shop = (SELECT shop FROM listings WHERE id = ?)', listingId;
-      // 'SELECT * FROM people WHERE id = (SELECT person FROM reviews WHERE shop = (SELECT shop FROM listings WHERE listings.id = ?))', listingId;
-    );
+    return connection.query('SELECT shop FROM listings WHERE listings.id = ?', listingId);
+  }).then(([data]) => {
+    // pick shop id out of data packet
+    const { shop } = data;
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC', [shop, listingId]);
+    // 'SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', listingId;
+    // 'SELECT * FROM listings WHERE shop = (SELECT shop FROM listings WHERE id = ?)', listingId;
+    // 'SELECT * FROM people WHERE id = (SELECT person FROM reviews WHERE shop = (SELECT shop FROM listings WHERE listings.id = ?))', listingId;
+    // );
     // reconfigure above to format:
     // 'SELECT ? … ; SELECT ? …; SELECT DISTINCT ? …', [var1, var2, var3];
   }).then(data => res.send(data))
