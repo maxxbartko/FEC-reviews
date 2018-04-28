@@ -23,10 +23,8 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
     connection = conn;
     return connection.query('SELECT shop FROM listings WHERE listings.id = ?', listingId);
   }).then(([data]) => {
-    // pick shop id out of data packet
     const { shop } = data;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM shops WHERE id = (SELECT shop FROM listings WHERE id = ?)', [shop, listingId, listingId]);
-    // 'SELECT * FROM listings WHERE shop = (SELECT shop FROM listings WHERE id = ?)', listingId;
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM shops WHERE id = ?; SELECT * FROM listings WHERE shop = ?', [shop, listingId, shop, shop]);
     // 'SELECT * FROM people WHERE id = (SELECT person FROM reviews WHERE shop = (SELECT shop FROM listings WHERE listings.id = ?))', listingId;
     // );
     // reconfigure above to format:
