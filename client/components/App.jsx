@@ -5,18 +5,26 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      reviews: this.props.reviews,
+      listings: this.props.listings,
+      people: this.props.people,
+      shop: this.props.shop,
     };
   }
 
   componentDidMount() {
-    // fetch(`${window.location.href}/reviews/`)
+    fetch(`${window.location.href}/reviews/`)
     // investigate relationship between API endpoint / fetch URL
-    //   .then(response => response.json())
-    //   .then(data => this.setState({ data }))
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+      .then(response => response.json())
+      .then((data) => {
+        const [reviews, listings, people, [shop]] = data;
+        this.setState({
+          reviews,
+          listings,
+          people,
+          shop,
+        });
+      }).catch(err => console.error`⚠️ ${err}`);
     // trigger GET request call for Review table data for this listing/store
     // requires Listing table query for ReviewItem
     // requires People table query for ReviewItem

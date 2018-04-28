@@ -21,7 +21,7 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
     return connection.query('SELECT shop FROM listings WHERE listings.id = ?', listingId);
   }).then(([data]) => {
     const { shop } = data;
-    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM shops WHERE id = ?; SELECT * FROM listings WHERE shop = ?; SELECT * FROM people WHERE id IN (SELECT person FROM reviews WHERE shop = ?)', [shop, listingId, shop, shop, shop]);
+    return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM listings WHERE shop = ? ORDER BY FIELD(id, ?) DESC, id DESC; SELECT * FROM people WHERE id IN (SELECT person FROM reviews WHERE shop = ?); SELECT * FROM shops WHERE id = ?', [shop, listingId, shop, listingId, shop, shop]);
   }).then(data => res.send(data))
     .catch(err => res.send`⚠️ Error responding to GET request: ${err}`);
 });
