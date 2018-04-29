@@ -11,15 +11,17 @@ export default class Reviews extends Component {
   }
 
   render() {
-    // map array of <Review />s for each
-    const reviews = this.props.reviews.map(rev => (<div> <ReviewItem review={rev} /> </div>));
-    // <ReviewItem /> with this.state.props = { review data }
+    const reviews = this.props.reviews.map((rev) => {
+      const variable = 'important';
+      // identify correct listings and people
+      // consider doing JOINS in queries in order to expedite this process
+      return (<div> <ReviewItem review={rev} /> </div>);
+    });
+
     return (
       <div>
         <br /><br />
-        c'mon and SLAM
-        and welcome to the DOM
-        <br /><br />
+        <b>Reviews</b> {this.props.shop.avg_stars_out_of_100}% ({this.props.shop.reviews_count})`
         {reviews}
         {/* Stretch goal: <ReviewsForm /> component here */}
         {/* Reviews [display shop star rating (number of shop reviews)]
@@ -41,10 +43,24 @@ Reviews.propTypes = {
     date: PropTypes.string.isRequired,
     stars: PropTypes.number.isRequired,
   })).isRequired,
-};
 
-// Shops Table //
-// id INT NOT NULL AUTO_INCREMENT,
-// name TEXT NOT NULL,
-// reviews_count INT,
-// avg_stars_out_of_100 TINYINT,
+  listings: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    shop: PropTypes.number.isRequired,
+  })).isRequired,
+
+  people: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+  })).isRequired,
+
+  shop: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    reviews_count: PropTypes.number.isRequired,
+    avg_stars_out_of_100: PropTypes.number.isRequired,
+  }).isRequired,
+};

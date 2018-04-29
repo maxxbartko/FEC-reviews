@@ -5,6 +5,8 @@ import Reviews from './Reviews';
 export default class App extends Component {
   constructor(props) {
     super(props);
+    // refactor for INNER JOIN comprehensive `reviews` object-arrays
+    //
     // actual starting state
     // this.state = {
     //   reviews: this.props.reviews,
@@ -93,7 +95,8 @@ export default class App extends Component {
         <br /><br />
         <span role="img" aria-label="Skull and Crossbones">
           ☠️　ＥＴＳＹＣＵＴＩＯＮＥＲ　☠️
-          <Reviews reviews={this.state.reviews} />
+          {/* by the time I'm done with data structure, all you'll need is shop and reviews */}
+          <Reviews reviews={this.state.reviews} listings={this.state.listings} people={this.state.people} shop={this.state.shop} />
         </span>
       </div>
     );

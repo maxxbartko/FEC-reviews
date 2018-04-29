@@ -18,9 +18,13 @@ app.get('/listings/:listingId/reviews/', (req, res) => {
     multipleStatements: true,
   }).then((conn) => {
     connection = conn;
+    // INNER JOIN to SELECT all shop data in this first go
     return connection.query('SELECT shop FROM listings WHERE listings.id = ?', listingId);
   }).then(([data]) => {
+    // revise which part of the data the shopId comes from
     const { shop } = data;
+    // do INNER JOIN and name columns AS to make comprehensive review entries, complete with listing and person (shop should probably still have its own query)
+    // https://www.w3schools.com/sql/sql_join.asp
     return connection.query('SELECT DISTINCT reviews.* FROM reviews, listings WHERE listings.shop = ? AND listings.shop = reviews.shop ORDER BY FIELD(reviews.listing, ?) DESC, reviews.date DESC; SELECT * FROM listings WHERE shop = ? ORDER BY FIELD(id, ?) DESC, id DESC; SELECT * FROM people WHERE id IN (SELECT person FROM reviews WHERE shop = ?) ORDER BY id DESC; SELECT * FROM shops WHERE id = ?', [shop, listingId, shop, listingId, shop, shop]);
   }).then(data => res.send(data))
     .catch(err => res.send`⚠️ Error responding to GET request: ${err}`);

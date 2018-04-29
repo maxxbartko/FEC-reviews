@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export default class ReviewItem extends Component {
   constructor(props) {
@@ -10,6 +11,8 @@ export default class ReviewItem extends Component {
   render() {
     return (
       <div>
+        {this.props.review.stars !== 1 ? `${this.props.review.stars} stars` : '1 star'} <br />
+        {moment(this.props.review.date).format('LL')} <br />
         {this.props.review.body}
         {/*
         Left panel:
